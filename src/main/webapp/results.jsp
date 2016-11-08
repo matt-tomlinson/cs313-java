@@ -12,6 +12,7 @@
         <title>Results Page</title>
     </head>
     <body>
+        <h1>Results Form</h1>
         <h1>Your result is: ${param.first} + ${param.second} = ${sum}</h1>
     </body>
 </html>
