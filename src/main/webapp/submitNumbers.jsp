@@ -12,7 +12,7 @@
         <title>Number Submission</title>
     </head>
     <body>
-        <h1>Number Submission</h1>
+        <h1>Number Submission Form</h1>
         <form action="ComputeSum" method="GET">
               First Number: <input type="text" name="first" /><br />
               Second Number: <input type="text" name="second" /><br /> 
