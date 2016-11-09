@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -57,7 +58,6 @@ public class login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**
@@ -71,7 +71,19 @@ public class login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+                String username = request.getParameter("username");
+                String password = request.getParameter("password");
+                String loggedIn = "";
+                
+                if (username.equals("Matt") && password.equals("secret")) {
+                    request.getSession().setAttribute("username", username);
+                    request.getSession().setAttribute("loggedIn", username + " is logged in.");
+                    request.getRequestDispatcher("/welcome.jsp").forward(request, response);
+                }
+                else {
+                    request.setAttribute("error", "Unknown user, please try again");
+                    request.getRequestDispatcher("/loginPage.jsp").forward(request, response);
+                }
     }
 
     /**

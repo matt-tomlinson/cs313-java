@@ -11,13 +11,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Sendrus
  */
-@WebServlet(urlPatterns = {"/ComputeSum"})
-public class ComputeSum extends HttpServlet {
+@WebServlet(urlPatterns = {"/logout"})
+public class logout extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +37,10 @@ public class ComputeSum extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ComputeSum</title>");            
+            out.println("<title>Servlet logout</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ComputeSum at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet logout at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,12 +58,6 @@ public class ComputeSum extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                int num1 = Integer.parseInt(request.getParameter("first"));
-                int num2 = Integer.parseInt(request.getParameter("second"));
-
-                int sum = num1 + num2;
-                request.setAttribute("sum",  sum);
-                request.getRequestDispatcher("/results.jsp").forward(request, response);
     }
 
     /**
@@ -76,7 +71,15 @@ public class ComputeSum extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+                HttpSession session = request.getSession();
+                
+                session.invalidate();
+                request.setAttribute("info", "Session ended.");
+                
+                request.getSession().setAttribute("username", "");
+                request.getSession().setAttribute("loggedIn", "");
+                request.setAttribute("error", "Logged Out User");
+                request.getRequestDispatcher("/loginPage.jsp").forward(request, response);                
     }
 
     /**
